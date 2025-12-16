@@ -1,0 +1,290 @@
+:root {
+    --bg-color: #050510;
+    --panel-bg: #0a0a1a;
+    --grid-bg: #03030a;
+    --border-color: #1a1a3a;
+    --primary-color: #00f3ff;
+    --secondary-color: #bc13fe;
+    --wall-color: #151525;
+    --visited-color: #2b1156;
+    --path-color: #00f3ff;
+    --start-color: #00ff66;
+    --end-color: #ff0055;
+
+    --font-heading: 'Orbitron', sans-serif;
+    --font-code: 'Roboto Mono', monospace;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    /* Prevent text selection while drawing walls */
+}
+
+body {
+    background-color: var(--bg-color);
+    color: #e0e0e0;
+    font-family: var(--font-code);
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar {
+    height: 70px;
+    background-color: var(--panel-bg);
+    border-bottom: 2px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.1);
+}
+
+.logo {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    color: #fff;
+    letter-spacing: 2px;
+}
+
+.logo-icon {
+    color: var(--primary-color);
+    text-shadow: 0 0 10px var(--primary-color);
+}
+
+.highlight {
+    color: var(--primary-color);
+}
+
+.controls {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.cyber-select {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    padding: 0.5rem 1rem;
+    font-family: var(--font-code);
+    cursor: pointer;
+    outline: none;
+    border-radius: 4px;
+}
+
+.cyber-button {
+    padding: 0.6rem 1.5rem;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%);
+}
+
+.cyber-button.primary {
+    background-color: var(--primary-color);
+    color: #000;
+    box-shadow: 0 0 15px rgba(0, 243, 255, 0.4);
+}
+
+.cyber-button.primary:hover {
+    background-color: #fff;
+    box-shadow: 0 0 25px rgba(0, 243, 255, 0.8);
+}
+
+.cyber-button.secondary {
+    background-color: transparent;
+    border: 1px solid var(--secondary-color);
+    color: var(--secondary-color);
+}
+
+.cyber-button.secondary:hover {
+    background-color: rgba(188, 19, 254, 0.2);
+}
+
+.legend-bar {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    padding: 1rem;
+    background-color: var(--bg-color);
+    font-size: 0.9rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.node {
+    width: 20px;
+    height: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.node.start {
+    background-color: var(--start-color);
+    box-shadow: 0 0 10px var(--start-color);
+}
+
+.node.target {
+    background-color: var(--end-color);
+    animation: pulse 1.5s infinite;
+}
+
+.node.wall {
+    background-color: var(--wall-color);
+    border-color: #333;
+}
+
+.node.unvisited {
+    background-color: var(--grid-bg);
+}
+
+.node.visited {
+    animation: visitedAnimation 1.5s forwards;
+}
+
+.node.path {
+    background-color: var(--path-color);
+    box-shadow: 0 0 10px var(--path-color);
+    animation: pathAnimation 0.5s forwards;
+    border: none;
+}
+
+.analytics-hud {
+    position: absolute;
+    top: 130px;
+    right: 40px;
+    background: rgba(10, 10, 26, 0.9);
+    border: 1px solid var(--primary-color);
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    min-width: 200px;
+    backdrop-filter: blur(5px);
+    z-index: 100;
+}
+
+.hud-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 0.3rem;
+}
+
+.hud-item:last-child {
+    border-bottom: none;
+}
+
+.hud-label {
+    font-size: 0.7rem;
+    color: #888;
+    text-transform: uppercase;
+}
+
+.hud-value {
+    font-size: 0.9rem;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.status-idle {
+    color: #888;
+}
+
+.status-running {
+    color: #ffff00;
+    text-shadow: 0 0 5px #ffff00;
+}
+
+.status-done {
+    color: #00ff66;
+    text-shadow: 0 0 5px #00ff66;
+}
+
+.status-fail {
+    color: #ff0055;
+}
+
+.grid-container {
+    flex: 1;
+    margin: 1rem 2rem 2rem;
+    border: 1px solid var(--border-color);
+    background-color: var(--grid-bg);
+    display: grid;
+    /* Columns will be set by JS */
+    gap: 0;
+    position: relative;
+    /* Context */
+}
+
+.grid-cell {
+    width: 100%;
+    height: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    transition: transform 0.1s ease;
+}
+
+.grid-cell:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Animations */
+@keyframes visitedAnimation {
+    0% {
+        transform: scale(0.3);
+        background-color: var(--secondary-color);
+        border-radius: 100%;
+    }
+
+    50% {
+        background-color: #8e13fe;
+    }
+
+    100% {
+        transform: scale(1);
+        background-color: rgba(188, 19, 254, 0.6);
+    }
+}
+
+@keyframes pathAnimation {
+    0% {
+        transform: scale(0.6);
+        background-color: var(--primary-color);
+    }
+
+    100% {
+        transform: scale(1);
+        background-color: var(--primary-color);
+        box-shadow: 0 0 15px var(--primary-color);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 0, 85, 0.4);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(255, 0, 85, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 0, 85, 0);
+    }
+}

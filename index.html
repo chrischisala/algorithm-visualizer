@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neural Pathfinding Visualizer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Roboto+Mono:wght@300;400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <meta name="description"
+        content="A high-performance interactive pathfinding visualizer built with Vanilla JS. Features custom recursive maze generation, real-time analytics, and procedural audio synthesis.">
+    <meta name="author" content="Chris Chisala">
+    <meta name="keywords"
+        content="Pathfinding, Dijkstra, A-Star, Algorithm, Visualizer, JavaScript, Engineering, Portfolio">
+
+    <!-- Open Graph / LinkedIn / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://chrischisala.github.io/my-website/algorithm-visualizer/">
+    <meta property="og:title" content="Neural Pathfinding Engine | Chris Chisala">
+    <meta property="og:description"
+        content="Interactive engineering showcase demonstrating high-performance graph algorithms with real-time analytics.">
+    <meta property="og:image" content="https://chrischisala.github.io/my-website/project-network.png">
+    <!-- Using your network image as preview -->
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://chrischisala.github.io/my-website/algorithm-visualizer/">
+    <meta property="twitter:title" content="Neural Pathfinding Engine">
+    <meta property="twitter:description" content="A Vanilla JS engineering showcase for graph theory algorithms.">
+    <meta property="twitter:image" content="https://chrischisala.github.io/my-website/project-network.png">
+
+    <link rel="icon" type="image/png" href="../favicon.png"> <!-- Reusing main site favicon -->
+</head>
+
+<body>
+    <div class="app-container">
+        <header class="navbar">
+            <div class="logo">
+                <span class="logo-icon">⚡</span> NEURAL<span class="highlight">PATH</span>
+            </div>
+
+            <div class="controls">
+                <select id="algorithm-select" class="cyber-select">
+                    <option value="dijkstra">Dijkstra's Algorithm</option>
+                    <option value="astar">A* Search (Heuristic)</option>
+                    <option value="bfs">Breadth-First Search</option>
+                </select>
+
+                <button id="maze-btn" class="cyber-button secondary">GENERATE MAZE</button>
+
+                <select id="speed-select" class="cyber-select">
+                    <option value="10">Speed: Fast</option>
+                    <option value="30">Speed: Medium</option>
+                    <option value="60">Speed: Slow</option>
+                </select>
+
+                <button id="visualize-btn" class="cyber-button primary">
+                    <span class="btn-text">INITIALIZE RUN</span>
+                    <span class="btn-glitch"></span>
+                </button>
+
+                <button id="clear-btn" class="cyber-button secondary">RESET GRID</button>
+            </div>
+        </header>
+
+        <div class="legend-bar">
+            <div class="legend-item">
+                <div class="node start"></div> Start Node
+            </div>
+            <div class="legend-item">
+                <div class="node target"></div> Target Node
+            </div>
+            <div class="legend-item">
+                <div class="node unvisited"></div> Unvisited
+            </div>
+            <div class="legend-item">
+                <div class="node visited"></div> Visited
+            </div>
+            <div class="legend-item">
+                <div class="node path"></div> Shortest Path
+            </div>
+            <div class="legend-item">
+                <div class="node wall"></div> Firewall (Wall)
+            </div>
+        </div>
+
+        <div class="analytics-hud">
+            <div class="hud-item">
+                <span class="hud-label">ALGORITHM</span>
+                <span id="hud-algo" class="hud-value">WAITING...</span>
+            </div>
+            <div class="hud-item">
+                <span class="hud-label">SEARCH STATE</span>
+                <span id="hud-status" class="hud-value status-idle">IDLE</span>
+            </div>
+            <div class="hud-item">
+                <span class="hud-label">NODES SCANNED</span>
+                <span id="hud-nodes" class="hud-value">0</span>
+            </div>
+            <div class="hud-item">
+                <span class="hud-label">TIME (ms)</span>
+                <span id="hud-time" class="hud-value">0</span>
+            </div>
+        </div>
+
+        <main id="grid-container" class="grid-container">
+            <!-- Grid generated by JavaScript -->
+        </main>
+
+        <footer
+            style="position: absolute; bottom: 5px; right: 10px; font-size: 0.7rem; color: rgba(255,255,255,0.2); pointer-events: none;">
+            v1.0.4 Stable • Engineered by Chris Chisala
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

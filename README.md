@@ -1,4 +1,3 @@
-# algorithm-visualizer
 # ⚡ Neural Pathfinding Visualizer
 
 A high-performance, interactive visualization tool for graph theory algorithms. Built with **Vanilla JavaScript** (ES6+) to demonstrate core computer science concepts, memory management, and real-time DOM manipulation without the overhead of external frameworks.
